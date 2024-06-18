@@ -1,0 +1,17 @@
+//&======================== ACCORDIONS DEFAULT ========================&//
+//&======================== ACCORDIONS DEFAULT ========================&//
+
+.accordion {
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &__body {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 250ms;
+  }
+}

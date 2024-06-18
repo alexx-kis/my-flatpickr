@@ -1,0 +1,30 @@
+//%======================== FUNCTIONS ========================%//
+//%======================== FUNCTIONS ========================%//
+
+@function vm($max, $min, $vp) {
+  @return max(calc(round($max/$vp*100vw*1000)/1000), $min);
+}
+
+@function cvm($const, $vp) {
+  @return max(calc(round($const/$vp*100vw*1000)/1000), $const);
+}
+
+//%------------ value increases relatively to viewport ------------%//
+@function const($const) {
+  @return max(calc(round($const/$DESKTOP*100vw*1000)/1000), $const);
+}
+
+//5------------ and not decreases to tablet vp ------------5//
+@function desk($max, $min) {
+  @return max(calc(round($max/$DESKTOP*100vw*1000)/1000), $min);
+}
+
+//%------------ value decreases to tablet vp ------------%//
+@function tab($max, $min) {
+  @return max(calc(round($max/$TABLET*100vw*1000)/1000), $min);
+}
+
+//%------------ value decreases to mobile vp ------------%//
+@function mob($max, $min) {
+  @return max(calc(round($max/$MOBILE*100vw*1000)/1000), $min);
+}

@@ -1,0 +1,25 @@
+/*@ //@======================== GENERAL ========================@// @*/
+/*@ //@======================== GENERAL ========================@// @*/
+
+html {
+	scroll-behavior: smooth;
+}
+
+.wrapper {
+	min-height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+.container {
+	// max-width: ; 
+	// padding: 0 15px;
+
+	//% для сайтов без полей по краям 
+	max-width: const(1440px);
+	padding-inline: $containerPadding;
+
+
+	margin-inline: auto;
+	height: 100%;
+}
