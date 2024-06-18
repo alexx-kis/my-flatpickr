@@ -1,42 +1,50 @@
+$color1: #e6e6e6;
+$color2: #000000e6;
+$calendarWidth: 500px;
+$calendarHeight: 500px;
+
 .flatpickr {
-  position: absolute;
-  display: none;
-  width: 307.875px;
+  display: grid;
+  grid-template-rows: 1fr 7fr;
+  width: $calendarWidth !important;
+  height: $calendarHeight !important;
   padding: 0;
+  position: absolute;
   visibility: hidden;
   opacity: 0;
   border: 0;
   border-radius: 5px;
-  box-shadow: 1px 0 0 #e6e6e6, -1px 0 0 #e6e6e6, 0 1px 0 #e6e6e6, 0 -1px 0 #e6e6e6, 0 3px 13px rgba(0, 0, 0, 0.08);
-  background: transparent;
+  box-shadow: 1px 0 0 $color1, -1px 0 0 $color1, 0 1px 0 $color1, 0 -1px 0 $color1, 0 3px 13px #00000014;
   background: #fff;
   touch-action: manipulation;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 1.5;
   text-align: center;
   animation: none;
   direction: ltr;
+  transition: all 250ms;
 
+
+  /*! //!------------ modificators ------------!// !*/
   &.open,
   &.inline {
-    max-height: 640px;
+    // max-height: 640px;
     visibility: visible;
     opacity: 1;
   }
 
   &.open {
-    z-index: 99999;
-    display: inline-block;
+    // display: inline-block;
+    z-index: calc(infinity);
   }
 
-  &.animate.open {
+  &.animate._open {
     animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   &.inline {
     position: relative;
     top: 2px;
-    display: block;
   }
 
   &.static {
@@ -44,8 +52,8 @@
     top: calc(100% + 2px);
 
     &.open {
-      z-index: 999;
       display: block;
+      z-index: 999;
     }
   }
 
@@ -55,38 +63,55 @@
     }
 
     &:nth-child(n + 2) .flatpickr__day.inRange:nth-child(7n + 1) {
-      box-shadow: -2px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+      box-shadow: -2px 0 0 $color1, 5px 0 0 $color1;
     }
   }
 
-  .hasWeeks .flatpickr__days-inner,
-  .hasTime .flatpickr__days-inner {
-    border-bottom: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+  &.hasWeeks,
+  &.hasTime {
+    .flatpickr__days-inner {
+      border-bottom: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 
-  .hasWeeks .flatpickr__days-inner {
-    border-left: 0;
+  &.hasWeeks {
+    .flatpickr__days-inner {
+      border-left: 0;
+    }
+
+    .flatpickr__body {
+      display: grid;
+      grid-template-columns: 1fr 7fr;
+    }
   }
 
-  &.hasTime .flatpickr-time {
-    height: 40px;
-    border-top: 1px solid #e6e6e6;
+  &.hasTime {
+    grid-template-rows: 1fr 7fr 1fr;
+
+    .flatpickr__time {
+      height: 100%;
+      border-top: 1px solid $color1;
+    }
   }
 
-  &.noCalendar.hasTime .flatpickr-time {
-    height: auto;
+  &.noCalendar.hasTime {
+    display: block;
+
+    .flatpickr__time {
+      height: 100%;
+    }
   }
 
   &:before,
   &:after {
     content: "";
-    position: absolute;
-    left: 22px;
     display: block;
     width: 0;
     height: 0;
+    position: absolute;
+    left: 22px;
     border: solid transparent;
     pointer-events: none;
   }
@@ -126,7 +151,7 @@
     }
 
     &:before {
-      border-bottom-color: #e6e6e6;
+      border-bottom-color: $color1;
     }
 
     &:after {
@@ -142,7 +167,7 @@
     }
 
     &:before {
-      border-top-color: #e6e6e6;
+      border-top-color: $color1;
     }
 
     &:after {
@@ -154,35 +179,32 @@
     outline: 0;
   }
 
+  /*$ //$------------ stricture ------------$// $*/
+  //$ header
   &__header {
     display: flex;
   }
 
   &__header-inner {
     flex: 1;
-    position: relative;
-    height: 34px;
-    overflow: hidden;
-    background: transparent;
-    fill: rgba(0, 0, 0, 0.9);
-    color: rgba(0, 0, 0, 0.9);
+    height: 40px;
+    fill: $color2;
+    color: $color2;
     line-height: 1;
     text-align: center;
     user-select: none;
   }
 
   &__header-arrow {
-    z-index: 3;
     display: grid;
-    // position: absolute;
-    width: 34px;
-    height: 34px;
-    fill: #000000e6;
-    cursor: pointer;
-    color: #000000e6;
-    text-decoration: none;
-    user-select: none;
     place-content: center;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+    fill: $color2;
+    cursor: pointer;
+    color: $color2;
+    user-select: none;
 
     &._disabled {
       display: none;
@@ -216,11 +238,11 @@
   }
 
   &__number-wrapper {
-    position: relative;
     height: auto;
+    position: relative;
 
     input,
-    span {
+    div {
       display: inline-block;
     }
 
@@ -228,12 +250,12 @@
       width: 100%;
     }
 
-    span {
-      position: absolute;
-      right: 0;
+    .arrow {
       width: 14px;
       height: 50%;
       padding: 0 4px 0 2px;
+      position: absolute;
+      right: 0;
       opacity: 0;
       border: 1px solid rgba(57, 57, 57, 0.15);
       cursor: pointer;
@@ -249,11 +271,11 @@
 
       &:after {
         content: "";
-        position: absolute;
         display: block;
+        position: absolute;
       }
 
-      &.arrowUp {
+      &._up {
         top: 0;
         border-bottom: 0;
 
@@ -265,7 +287,7 @@
         }
       }
 
-      &.arrowDown {
+      &._down {
         top: 50%;
 
         &:after {
@@ -289,7 +311,7 @@
     &:hover {
       background: rgba(0, 0, 0, 0.05);
 
-      span {
+      div {
         opacity: 1;
       }
     }
@@ -366,12 +388,12 @@
     display: inline-block;
     width: 6ch;
 
-    span {
-      &.arrowUp:after {
+    .arrow {
+      &._up:after {
         border-bottom-color: rgba(0, 0, 0, 0.9);
       }
 
-      &.arrowDown:after {
+      &._down:after {
         border-top-color: rgba(0, 0, 0, 0.9);
       }
     }
@@ -391,27 +413,49 @@
     }
   }
 
+  //$ body
+  &__body {
+    flex: 1 1 auto;
+    display: flex;
+    width: 100%;
+  }
 
+  &__weeks {
+    display: flex;
+    flex-direction: column;
+
+    .flatpickr__weekday {
+      height: 30px;
+    }
+  }
 
   &__weekdays {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 28px;
+    height: 30px;
     overflow: hidden;
     background: transparent;
     text-align: center;
   }
 
+  &__body-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
   &__weekdays-inner {
     flex: 1;
     display: flex;
+    height: 100%;
   }
 
   &__weekday {
-    flex: 1;
-    display: block;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     background: transparent;
     cursor: default;
     color: rgba(0, 0, 0, 0.54);
@@ -422,11 +466,8 @@
   }
 
   &__days {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    width: 307.875px;
-    overflow: hidden;
+    flex: 1 1 auto;
+    width: 100% !important;
 
     &:focus {
       outline: 0;
@@ -435,13 +476,9 @@
 
   &__days-inner {
     display: grid;
-    justify-content: space-around;
-    flex-wrap: wrap;
     grid-template-columns: repeat(7, 1fr);
-    // width: 300px;
-    // min-width: 300px;
-    // max-width: 300px;
     width: 100%;
+    height: 100%;
     outline: 0;
     text-align: left;
     transform: translate3d(0, 0, 0);
@@ -449,19 +486,25 @@
 
   &__day,
   &__week {
-    position: relative;
-    display: inline-block;
+    display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    margin: 0;
+    max-width: none;
+    height: 90%;
+    position: relative;
     border: 1px solid transparent;
     border-radius: 150px;
     background: none;
+    background: transparent;
     cursor: pointer;
     color: #404040;
     font-weight: 400;
     line-height: 40px;
     text-align: center;
+    transition: all 250ms;
+
+    &:hover {}
 
     &.inRange,
     &._not-current-month.inRange,
@@ -471,9 +514,9 @@
     &._not-current-month:hover,
     &:focus,
     &._not-current-month:focus {
-      border-color: #e6e6e6;
+      border-color: $color1;
       outline: 0;
-      background: #e6e6e6;
+      background: $color1;
       cursor: pointer;
     }
 
@@ -488,19 +531,19 @@
       }
     }
 
-    &.selected,
+    &._selected,
     &.startRange,
     &.endRange,
-    &.selected.inRange,
+    &._selected.inRange,
     &.startRange.inRange,
     &.endRange.inRange,
-    &.selected:focus,
+    &._selected:focus,
     &.startRange:focus,
     &.endRange:focus,
-    &.selected:hover,
+    &._selected:hover,
     &.startRange:hover,
     &.endRange:hover,
-    &.selected._not-current-month,
+    &._selected._not-current-month,
     &.startRange._not-current-month,
     &.endRange._not-current-month {
       border-color: #569ff7;
@@ -509,32 +552,32 @@
       color: #fff;
     }
 
-    &.selected.startRange,
+    &._selected.startRange,
     &.startRange.startRange,
     &.endRange.startRange {
       border-radius: 50px 0 0 50px;
     }
 
-    &.selected.endRange,
+    &._selected.endRange,
     &.startRange.endRange,
     &.endRange.endRange {
       border-radius: 0 50px 50px 0;
     }
 
-    &.selected.startRange+.endRange:not(:nth-child(7n + 1)),
+    &._selected.startRange+.endRange:not(:nth-child(7n + 1)),
     &.startRange.startRange+.endRange:not(:nth-child(7n + 1)),
     &.endRange.startRange+.endRange:not(:nth-child(7n + 1)) {
       box-shadow: -10px 0 0 #569ff7;
     }
 
-    &.selected.startRange.endRange,
+    &._selected.startRange.endRange,
     &.startRange.startRange.endRange {
       border-radius: 50px;
     }
 
     &.inRange {
       border-radius: 0;
-      box-shadow: -5px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+      // box-shadow: -5px 0 0 $color1, 5px 0 0 $color1;
     }
 
     &._disabled {
@@ -582,7 +625,7 @@
       }
     }
 
-    &.week.selected {
+    &.week._selected {
       border-radius: 0;
       box-shadow: -5px 0 0 #569ff7, 5px 0 0 #569ff7;
     }
@@ -594,176 +637,118 @@
 
   &__week {
     &:hover {
-      background: none;
       border-color: transparent;
-    }
-  }
-}
-
-
-.flatpickr-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-
-.flatpickr__weeks {
-  // float: left;
-}
-
-.flatpickr__weeks-inner {
-  padding: 0 12px;
-  box-shadow: 1px 0 0 #e6e6e6;
-  display: grid;
-  grid-template-rows: repeat(6, 1fr);
-}
-
-.flatpickr__weekday {
-  width: 100%;
-  line-height: 28px;
-  float: none;
-}
-
-.flatpickr__week {}
-
-.flatpickr__day,
-.flatpickr__week {
-  // display: block;
-  // width: 100%;
-  // height: 40px;
-  // max-width: none;
-  // border: none;
-  // background: transparent;
-  // // cursor: default;
-  // cursor: pointer;
-  // color: rgba(57, 57, 57, 0.3);
-
-  // &:hover {
-  //   display: block;
-  //   width: 100%;
-  //   max-width: none;
-  //   border: none;
-  //   // background: transparent;
-  //   // cursor: default;
-  //   color: rgba(57, 57, 57, 0.3);
-  // }
-}
-
-.flatpickr__body {
-  display: flex;
-  overflow: hidden;
-}
-
-.flatpickr__body-inner {
-  display: inline-block;
-  padding: 0;
-}
-
-.flatpickr-time {
-  display: flex;
-  height: 0;
-  max-height: 40px;
-  overflow: hidden;
-  outline: 0;
-  line-height: 40px;
-  text-align: center;
-
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .flatpickr__number-wrapper {
-    flex: 1;
-    width: 40%;
-    height: 40px;
-    float: left;
-
-    span {
-      &.arrowUp:after {
-        border-bottom-color: #393939;
-      }
-
-      &.arrowDown:after {
-        border-top-color: #393939;
-      }
+      background: none;
     }
   }
 
-  &.hasSeconds .flatpickr__number-wrapper {
-    width: 26%;
+  &__weeks-inner {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    box-shadow: 1px 0 0 $color1;
   }
 
-  &.time24hr .flatpickr__number-wrapper {
-    width: 49%;
-  }
-
-  input {
-    position: relative;
-    height: inherit;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
-    color: #393939;
-    font-size: 14px;
-    line-height: inherit;
+  //$ time
+  &__time {
+    display: flex;
+    height: 0;
+    // max-height: 40px;
+    // overflow: hidden;
+    outline: 0;
+    line-height: 40px;
     text-align: center;
-    appearance: textfield;
 
-    &.flatpickr-hour {
-      font-weight: bold;
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
     }
 
-    &.flatpickr-minute,
-    &.flatpickr-second {
-      font-weight: 400;
+    .flatpickr__number-wrapper {
+      flex: 1;
+      width: 40%;
+      // height: 40px;
+
+      .arrow {
+        &._up:after {
+          border-bottom-color: #393939;
+        }
+
+        &._down:after {
+          border-top-color: #393939;
+        }
+      }
     }
 
-    &:focus {
+    &.hasSeconds .flatpickr__number-wrapper {
+      width: 26%;
+    }
+
+    &.time24hr .flatpickr__number-wrapper {
+      width: 49%;
+    }
+
+    input {
+      height: 100%;
+      position: relative;
       border: 0;
-      outline: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+      color: #393939;
+      font-size: 14px;
+      line-height: inherit;
+      text-align: center;
+      appearance: textfield;
+
+      &.flatpickr-hour {
+        font-weight: bold;
+      }
+
+      &.flatpickr-minute,
+      &.flatpickr-second {
+        font-weight: 400;
+      }
+
+      &:focus {
+        border: 0;
+        outline: 0;
+      }
+    }
+
+    input:hover,
+    .flatpickr__meridiem:hover,
+    input:focus,
+    .flatpickr__meridiem:focus {
+      background: #eee;
     }
   }
 
-  .flatpickr-time-separator {
-    align-self: center;
-    width: 2%;
-    height: inherit;
-    color: #393939;
-    font-weight: bold;
-    line-height: inherit;
-    float: left;
-    user-select: none;
-  }
-
-  .flatpickr-am-pm {
+  &__meridiem {
     align-self: center;
     width: 18%;
-    height: inherit;
     outline: 0;
     cursor: pointer;
     color: #393939;
     font-weight: 400;
-    line-height: inherit;
     text-align: center;
-    float: left;
     user-select: none;
   }
 
-  input:hover,
-  .flatpickr-am-pm:hover,
-  input:focus,
-  .flatpickr-am-pm:focus {
-    background: #eee;
-  }
-}
 
-.flatpickr-input[readonly] {
-  cursor: pointer;
+
+  &__time-separator {
+    display: flex;
+    align-items: center;
+    color: #393939;
+    font-weight: bold;
+    user-select: none;
+  }
+
+  &__input[readonly] {
+    cursor: pointer;
+  }
 }
 
 @keyframes fpFadeInDown {

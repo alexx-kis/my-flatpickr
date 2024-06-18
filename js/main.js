@@ -15,11 +15,13 @@ flatpickr('.calendar__input', {
   altInput: true,
   dateFormat: "d-m-Y",
   altFormat: "d.m.Y",
-  inline: true,
+  inline: false,
   mode: "range",
   enableTime: true,
   weekNumbers: true,
   // minDate: "today"
   // nextArrow: nextArrow,
   // prevArrow: prevArrow,
+  // mode: "multiple",
+  // noCalendar: true,
 });
